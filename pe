@@ -16,3 +16,5 @@ for ($i = 0; $i -lt $devicePaths.Length; $i++) {
     # Display the updated device name
     Write-Host "Device '$currentName' renamed to '$newNames[$i]'"
 }
+
+ren "\\\\.\\VBoxMiniRdrDN" "VBoxMiniRdr DN"
