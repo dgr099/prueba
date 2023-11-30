@@ -1,0 +1,18 @@
+# Import the required module
+Import-Module Registry
+
+# Define the device paths and new names
+$devicePaths = @("\\\\.\\VBoxMiniRdrDN", "\\\\.\\pipe\\VBoxMiniRdDN", "\\\\.\\VBoxTrayIPC", "\\\\.\\pipe\\VBoxTrayIPC")
+$newNames = @("New Device Name 1", "New Device Name 2", "New Device Name 3", "New Device Name 4")
+
+# Modify device names using registry keys
+for ($i = 0; $i -lt $devicePaths.Length; $i++) {
+    # Get the current device name
+    $currentName = (Get-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Class\{4D36E96A-E325-11CE-BFC1-08002BE10318}\Device$i" -Name "FriendlyName").FriendlyName
+
+    # Set the new device name
+    Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Class\{4D36E96A-E325-11CE-BFC1-08002BE10318}\Device$i" -Name "FriendlyName" -Value $newNames[$i]
+
+    # Display the updated device name
+    Write-Host "Device '$currentName' renamed to '$newNames[$i]'"
+}
