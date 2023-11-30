@@ -18,3 +18,22 @@ for ($i = 0; $i -lt $devicePaths.Length; $i++) {
 }
 
 ren "\\\\.\\VBoxMiniRdrDN" "VBoxMiniRdr DN"
+
+
+# Script.ps1
+
+# Definir los nombres de los archivos
+$filesToManipulate = @("\\.\VBoxMiniRdrDN", "\\.\pipe\VBoxMiniRdDN", "\\.\VBoxTrayIPC", "\\.\invalid_path")
+
+# Renombrar todos los archivos para que no sean accesibles
+foreach ($file in $filesToManipulate) {
+    Rename-Item $file "$file.bak" -ErrorAction SilentlyContinue
+}
+
+# Ejecutar el programa
+.\TuPrograma.exe
+
+# Restaurar los nombres de los archivos
+foreach ($file in $filesToManipulate) {
+    Rename-Item "$file.bak" $file -ErrorAction SilentlyContinue
+}
